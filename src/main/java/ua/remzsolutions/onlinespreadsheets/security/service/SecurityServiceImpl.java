@@ -10,12 +10,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-/**
- * Implementation of {@link ua.remzsolutions.onlinespreadsheets.security.service.SecurityService}
- *
- * @author Edward George
- * @version 1.0
- */
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
@@ -30,12 +24,13 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public void autoLogin(String username, String password) {
+    public Authentication authenticate(String username, String password) {
         logger.info("Trying to log in user '{}'", username);
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password,
-                        AuthorityUtils.createAuthorityList("ROLE_USER")));
+                new UsernamePasswordAuthenticationToken(username, password, AuthorityUtils.createAuthorityList("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return authentication;
     }
 }

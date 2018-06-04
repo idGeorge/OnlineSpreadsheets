@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserEntity> findByFields(String username, String firstName, String lastName, boolean fired, AccessLevelEntity accessLevel, Pageable pageable) {
-        return repository.findByUsernameContainingOrFirstNameContainingOrLastNameContainingOrFiredOrAccessLevel(username, firstName, lastName, fired, accessLevel, pageable);
+        return repository.findByAnyOfFields(username, firstName, lastName, fired, accessLevel, pageable);
     }
 
     @Override

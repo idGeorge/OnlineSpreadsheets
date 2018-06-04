@@ -2,15 +2,22 @@ package ua.remzsolutions.onlinespreadsheets.domain.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
+@Builder
 @Table(name = "sheets")
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class SheetEntity {
 
     @Id
@@ -24,10 +31,6 @@ public class SheetEntity {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "content")
     private String content;
-
-
-    public SheetEntity() {
-    }
 
 
     public void removeRow(int index) {
@@ -120,53 +123,4 @@ public class SheetEntity {
         return fromJsonToArray(content);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public SheetEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public SheetEntity setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public SheetEntity setContent(String content) {
-        this.content = content;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SheetEntity that = (SheetEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(content, that.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, content);
-    }
-
-    @Override
-    public String toString() {
-        return "SheetEntity{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                '}';
-    }
 }

@@ -49,8 +49,8 @@ public class DocumentController {
 
     @ModelAttribute("user")
     public UserEntity getUser(HttpServletRequest servletRequest) {
-        RoutingData routingData = (RoutingData) servletRequest.getAttribute("routingData");
-        UserEntity user = userService.findOne(routingData.getUserId());
+        TokenPayload tokenPayload = (TokenPayload) servletRequest.getAttribute("tokenPayload");
+        UserEntity user = userService.findOne(tokenPayload.getUserId());
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -134,16 +134,15 @@ public class DocumentController {
         }
 
         Date currentDate = new Date();
-        DocumentEntity documentEntity = new DocumentEntity()
-                .setAccessLevel(accessLevelEntity)
-                .setArchived(false)
-                .setTitle(request.getTitle())
-                .setDateCreated(currentDate)
-                .setDateModified(currentDate)
-                .setAuthor(user)
-                .setSheets(new HashMap<>());
-
-        documentEntity = documentService.save(documentEntity);
+        DocumentEntity documentEntity = documentService.save(DocumentEntity.builder()
+                .accessLevel(accessLevelEntity)
+                .archived(false)
+                .title(request.getTitle())
+                .dateCreated(currentDate)
+                .dateModified(currentDate)
+                .author(user)
+                .sheets(new HashMap<>())
+                .build());
 
         return ResponseEntity.ok(new CreateDocumentResponse(converter.convertToDto(documentEntity)));
     }

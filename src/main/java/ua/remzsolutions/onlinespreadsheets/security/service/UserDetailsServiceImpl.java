@@ -13,13 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 
-/**
- * Implementation of {@link UserDetailsService}
- *
- * @author Edward George
- * @version 1.0
- * */
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

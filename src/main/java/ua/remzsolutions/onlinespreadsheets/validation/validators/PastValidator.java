@@ -1,6 +1,6 @@
-package ua.remzsolutions.onlinespreadsheets.web.validation.validators;
+package ua.remzsolutions.onlinespreadsheets.validation.validators;
 
-import ua.remzsolutions.onlinespreadsheets.web.validation.constraints.PastTime;
+import ua.remzsolutions.onlinespreadsheets.validation.constraints.PastTime;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

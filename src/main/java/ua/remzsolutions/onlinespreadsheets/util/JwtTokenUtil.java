@@ -20,21 +20,30 @@ public class JwtTokenUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String getUserIdFromToken(String token) {
+    public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public String generateToken(String userId) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userId);
+        return doGenerateToken(claims, username);
     }
 
-    public String generateToken(Map<String, Object> claims, String userId) {
-        return doGenerateToken(claims, userId);
+    public String generateToken(Map<String, Object> claims, String username) {
+        return doGenerateToken(claims, username);
     }
 
-    public void validateToken(String token) throws RuntimeException {
-        Jwts.parser().setSigningKey(secret).parse(token);
+    public boolean hasClaim(String claimName, String token) {
+
+    }
+
+    public boolean isValid(String token) {
+        try {
+            Jwts.parser().setSigningKey(secret).parse(token);
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
     }
 
     private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {

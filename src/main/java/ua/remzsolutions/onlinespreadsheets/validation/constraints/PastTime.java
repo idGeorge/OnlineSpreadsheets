@@ -1,6 +1,6 @@
-package ua.remzsolutions.onlinespreadsheets.web.validation.constraints;
+package ua.remzsolutions.onlinespreadsheets.validation.constraints;
 
-import ua.remzsolutions.onlinespreadsheets.web.validation.validators.PastValidator;
+import ua.remzsolutions.onlinespreadsheets.validation.validators.PastValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

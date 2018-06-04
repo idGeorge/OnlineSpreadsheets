@@ -20,10 +20,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
                                             @Param("lastName") String lastName,
                                             Pageable pageable);
 
-    Page<UserEntity> findByUsernameContainingOrFirstNameContainingOrLastNameContainingOrFiredOrAccessLevel(String username,
-                                                                                                           String firstName,
-                                                                                                           String lastName,
-                                                                                                           boolean fired,
-                                                                                                           AccessLevelEntity accessLevel,
-                                                                                                           Pageable pageable);
+    Page<UserEntity> findByAnyOfFields(String username, String firstName,
+                                       String lastName, boolean fired,
+                                       AccessLevelEntity accessLevel, Pageable pageable);
 }

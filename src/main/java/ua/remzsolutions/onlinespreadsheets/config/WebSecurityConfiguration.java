@@ -1,10 +1,9 @@
 package ua.remzsolutions.onlinespreadsheets.config;
 
 import ua.remzsolutions.onlinespreadsheets.security.entry.RestAuthenticationEntryPoint;
-import ua.remzsolutions.onlinespreadsheets.security.filter.JwtAuthenticationTokenFilter;
+import ua.remzsolutions.onlinespreadsheets.security.filter.JwtAuthorizationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -22,12 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(UserDetailsService userDetailsService) {
+    public WebSecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -42,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter getAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
+    public JwtAuthorizationTokenFilter getAuthenticationTokenFilter() {
+        return new JwtAuthorizationTokenFilter();
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)

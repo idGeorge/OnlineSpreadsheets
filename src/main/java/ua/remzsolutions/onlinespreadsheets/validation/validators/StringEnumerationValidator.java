@@ -1,6 +1,6 @@
-package ua.remzsolutions.onlinespreadsheets.web.validation.validators;
+package ua.remzsolutions.onlinespreadsheets.validation.validators;
 
-import ua.remzsolutions.onlinespreadsheets.web.validation.constraints.StringEnumeration;
+import ua.remzsolutions.onlinespreadsheets.validation.constraints.StringEnumeration;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

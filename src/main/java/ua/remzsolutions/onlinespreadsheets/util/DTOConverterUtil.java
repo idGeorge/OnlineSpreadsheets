@@ -46,7 +46,7 @@ public class DTOConverterUtil<E, D> {
 
     public List<E> convertToEntity(List<D> dtoList) {
         return dtoList.stream().map(this::convertToEntity)
-                .collect(Collectors.toCollection(() -> new ArrayList<>(dtoList.size())));
+                .collect(Collectors.toList());
     }
 
     public Page<D> convertToDto(Page<E> entityPage, PageRequest pageRequest) {

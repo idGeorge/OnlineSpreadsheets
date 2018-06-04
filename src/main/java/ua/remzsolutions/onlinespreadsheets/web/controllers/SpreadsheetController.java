@@ -2,7 +2,7 @@ package ua.remzsolutions.onlinespreadsheets.web.controllers;
 
 
 import ua.remzsolutions.onlinespreadsheets.domain.entity.SheetEntity;
-import ua.remzsolutions.onlinespreadsheets.domain.services.SheetService;
+import ua.remzsolutions.onlinespreadsheets.domain.services.SpreadsheetService;
 import ua.remzsolutions.onlinespreadsheets.web.exception.ResourceNotFoundException;
 import ua.remzsolutions.onlinespreadsheets.web.request.EditSpreadsheetRequest;
 import ua.remzsolutions.onlinespreadsheets.web.request.UpdateSpreadsheetStructureRequest;
@@ -17,24 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/spreadsheet")
 public class SpreadsheetController {
 
+    private final SpreadsheetService spreadsheetService;
+
     @Autowired
-    private SheetService sheetService;
+    public SpreadsheetController(SpreadsheetService spreadsheetService) {
+        this.spreadsheetService = spreadsheetService;
+    }
 
     @PatchMapping("/content")
     public ResponseEntity updateSheet(@RequestBody EditSpreadsheetRequest request) {
-        SheetEntity entity = sheetService.findOne(request.getId());
+        SheetEntity entity = spreadsheetService.findOne(request.getId());
         if (entity == null) {
             throw new ResourceNotFoundException();
         }
 
         entity.set(request.getRow(), request.getCol(), request.getNewValue());
-        sheetService.save(entity);
+        spreadsheetService.save(entity);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/structure")
     public ResponseEntity updateStructure(@RequestBody UpdateSpreadsheetStructureRequest request) {
-        SheetEntity entity = sheetService.findOne(request.getId());
+        SheetEntity entity = spreadsheetService.findOne(request.getId());
         if (entity == null) {
             throw new ResourceNotFoundException();
         }
@@ -58,7 +62,7 @@ public class SpreadsheetController {
             }
         }
 
-        sheetService.save(entity);
+        spreadsheetService.save(entity);
         return ResponseEntity.ok().build();
     }
 }

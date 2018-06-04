@@ -12,7 +12,7 @@ import ua.remzsolutions.onlinespreadsheets.web.exception.ResourceNotFoundExcepti
 import ua.remzsolutions.onlinespreadsheets.web.exception.UnauthorizedAccessException;
 import ua.remzsolutions.onlinespreadsheets.web.exception.UserNotFoundException;
 import ua.remzsolutions.onlinespreadsheets.web.request.CreateUserRequest;
-import ua.remzsolutions.onlinespreadsheets.web.request.RoutingData;
+import ua.remzsolutions.onlinespreadsheets.web.request.TokenPayload;
 import ua.remzsolutions.onlinespreadsheets.web.request.UpdateUserRequest;
 import ua.remzsolutions.onlinespreadsheets.web.request.UserLookupRequest;
 import ua.remzsolutions.onlinespreadsheets.web.response.CreateUserResponse;
@@ -120,23 +120,22 @@ public class UserController {
             throw new ResourceNotFoundException("Access level with id '" + request.getAccessLevelId() + "' not found.");
         }
 
-        UserEntity userEntity = new UserEntity()
-                .setUsername(request.getUsername())
-                .setPassword(passwordEncoder.encode(request.getPassword()))
-                .setFirstName(request.getFirstName())
-                .setLastName(request.getLastName())
-                .setFired(false)
-                .setAccessLevel(accessLevel);
-
-        userEntity = userService.save(userEntity);
+        UserEntity userEntity = userService.save(UserEntity.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .fired(false)
+                .accessLevel(accessLevel)
+                .build());
 
         return ResponseEntity.ok(new CreateUserResponse(converter.convertToDto(userEntity)));
     }
 
     @ModelAttribute("user")
     public UserEntity getUser(HttpServletRequest servletRequest) {
-        RoutingData routingData = (RoutingData) servletRequest.getAttribute("routingData");
-        UserEntity user = userService.findOne(routingData.getUserId());
+        TokenPayload tokenPayload = (TokenPayload) servletRequest.getAttribute("tokenPayload");
+        UserEntity user = userService.findOne(tokenPayload.getUserId());
         if (user == null) {
             throw new UserNotFoundException();
         }

@@ -1,24 +1,17 @@
 package ua.remzsolutions.onlinespreadsheets.web.response;
 
+import lombok.*;
 import ua.remzsolutions.onlinespreadsheets.domain.dto.DocumentDTO;
 
+
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CreateDocumentResponse extends AbstractResponse {
 
     private DocumentDTO document;
 
-    public CreateDocumentResponse() {
-    }
-
-    public CreateDocumentResponse(DocumentDTO document) {
-        this.document = document;
-    }
-
-    public DocumentDTO getDocument() {
-        return document;
-    }
-
-    public CreateDocumentResponse setDocument(DocumentDTO document) {
-        this.document = document;
-        return this;
-    }
 }

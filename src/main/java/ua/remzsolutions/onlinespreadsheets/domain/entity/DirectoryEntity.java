@@ -1,12 +1,20 @@
 package ua.remzsolutions.onlinespreadsheets.domain.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Builder
 @Table(name = "directories")
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class DirectoryEntity {
 
     @Id
@@ -37,98 +45,4 @@ public class DirectoryEntity {
     @JoinColumn(name = "access_level")
     private AccessLevelEntity accessLevel;
 
-
-    public DirectoryEntity() {
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public DirectoryEntity setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public DirectoryEntity getParentDirectory() {
-        return parentDirectory;
-    }
-
-    public DirectoryEntity setParentDirectory(DirectoryEntity parentDirectory) {
-        this.parentDirectory = parentDirectory;
-        return this;
-    }
-
-    public Set<DirectoryEntity> getSubDirectories() {
-        return subDirectories;
-    }
-
-    public DirectoryEntity setSubDirectories(Set<DirectoryEntity> subDirectories) {
-        this.subDirectories = subDirectories;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public DirectoryEntity setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public DirectoryEntity setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-        return this;
-    }
-
-    public Set<DocumentEntity> getDocuments() {
-        return documents;
-    }
-
-    public DirectoryEntity setDocuments(Set<DocumentEntity> documents) {
-        this.documents = documents;
-        return this;
-    }
-
-    public AccessLevelEntity getAccessLevel() {
-        return accessLevel;
-    }
-
-    public DirectoryEntity setAccessLevel(AccessLevelEntity accessLevel) {
-        this.accessLevel = accessLevel;
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DirectoryEntity directoryEntity = (DirectoryEntity) o;
-        return Objects.equals(id, directoryEntity.id) &&
-                Objects.equals(dateCreated, directoryEntity.dateCreated) &&
-                Objects.equals(accessLevel, directoryEntity.accessLevel);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, dateCreated, accessLevel);
-    }
-
-    @Override
-    public String toString() {
-        return "DirectoryEntity{" +
-                "id=" + id +
-                ", parentDirectory=" + parentDirectory +
-                ", name='" + name + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", documents=" + documents +
-                ", accessLevel=" + accessLevel +
-                '}';
-    }
 }

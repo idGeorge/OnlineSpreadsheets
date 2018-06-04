@@ -4,29 +4,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.*;
 import ua.remzsolutions.onlinespreadsheets.domain.dto.DirectoryDTO;
 import ua.remzsolutions.onlinespreadsheets.domain.dto.DocumentDTO;
 import ua.remzsolutions.onlinespreadsheets.domain.dto.UserDTO;
 import ua.remzsolutions.onlinespreadsheets.domain.entity.DirectoryEntity;
 import ua.remzsolutions.onlinespreadsheets.domain.entity.DocumentEntity;
 import ua.remzsolutions.onlinespreadsheets.domain.entity.UserEntity;
-import ua.remzsolutions.onlinespreadsheets.domain.services.DirectoryService;
-import ua.remzsolutions.onlinespreadsheets.domain.services.UserService;
-import ua.remzsolutions.onlinespreadsheets.security.service.SecurityService;
 import ua.remzsolutions.onlinespreadsheets.util.DTOConverterUtil;
 import ua.remzsolutions.onlinespreadsheets.util.JwtTokenUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@PropertySources({
-        @PropertySource("classpath:/application-config.properties")
-})
-@ComponentScan(basePackages =
-        {"ua.remzsolutions.onlinespreadsheets.domain.*",
-                "ua.remzsolutions.onlinespreadsheets.domain.services.*"})
-public class EnvironmentConfiguration {
+public class ApplicationConfiguration {
 
     @Bean
     public JwtTokenUtil tokenUtil() {

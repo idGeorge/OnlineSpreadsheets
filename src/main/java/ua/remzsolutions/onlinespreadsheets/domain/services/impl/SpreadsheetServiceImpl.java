@@ -2,7 +2,7 @@ package ua.remzsolutions.onlinespreadsheets.domain.services.impl;
 
 import ua.remzsolutions.onlinespreadsheets.domain.repository.SheetRepository;
 import ua.remzsolutions.onlinespreadsheets.domain.entity.SheetEntity;
-import ua.remzsolutions.onlinespreadsheets.domain.services.SheetService;
+import ua.remzsolutions.onlinespreadsheets.domain.services.SpreadsheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class SheetServiceImpl implements SheetService {
+public class SpreadsheetServiceImpl implements SpreadsheetService {
 
     @Autowired
     private SheetRepository repository;

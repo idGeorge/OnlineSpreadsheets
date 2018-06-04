@@ -35,13 +35,9 @@ import java.util.Iterator;
 public class DirectoryController {
 
     private static final Logger LOGGER = LogManager.getLogger();
-
     private final DirectoryService directoryService;
-
     private final UserService userService;
-
     private final AccessLevelService accessLevelService;
-
     private final DTOConverterUtil<DirectoryEntity, DirectoryDTO> converter;
 
     @Autowired
@@ -58,8 +54,8 @@ public class DirectoryController {
 
     @ModelAttribute("user")
     public UserEntity getUser(HttpServletRequest servletRequest) {
-        RoutingData routingData = (RoutingData) servletRequest.getAttribute("routingData");
-        UserEntity user = userService.findOne(routingData.getUserId());
+        TokenPayload tokenPayload = (TokenPayload) servletRequest.getAttribute("tokenPayload");
+        UserEntity user = userService.findOne(tokenPayload.getUserId());
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -71,18 +67,20 @@ public class DirectoryController {
     public ResponseEntity<DirectoryTreeResponse> getDirectoryTree(@ModelAttribute("user") UserEntity user) {
         DirectoryEntity directory = directoryService.findFirstByName("root");
         if (directory == null) {
-            DirectoryEntity rootDirectory = new DirectoryEntity()
-                    .setName("root")
-                    .setAccessLevel(accessLevelService.findWithSmallestPriority())
-                    .setDateCreated(new Date());
+            DirectoryEntity rootDirectory = DirectoryEntity.builder()
+                    .name("root")
+                    .accessLevel(accessLevelService.findWithSmallestPriority())
+                    .dateCreated(new Date())
+                    .build();
+
             directory = directoryService.save(rootDirectory);
         }
 
 
-        removeForbiddenDirectoriesAndDocuments(directory, user.getAccessLevel());
+        removeForbiddenDirectoriesAndDocuments(directory, user.getAccessLevel()); // move to service use method security
 
-        DirectoryTreeDTO tree = new DirectoryTreeDTO()
-                .setRoot(converter.convertToDto(directory));
+        DirectoryTreeDTO tree = new DirectoryTreeDTO();
+        tree.setRoot(converter.convertToDto(directory));
 
         return ResponseEntity.ok(new DirectoryTreeResponse(tree));
     }
@@ -104,9 +102,8 @@ public class DirectoryController {
     }
 
     @DeleteMapping("/{id}") // TODO: test
-    public ResponseEntity deleteDirectory(DeleteDirectoryRequest request,
-                                          @ModelAttribute("user") UserEntity user) {
-        DirectoryEntity directory = directoryService.findOne(request.getId());
+    public ResponseEntity deleteDirectory(@PathVariable Long id, @ModelAttribute("user") UserEntity user) {
+        DirectoryEntity directory = directoryService.findOne(id);
         if (directory == null) {
             throw new ResourceNotFoundException();
         }
@@ -186,12 +183,13 @@ public class DirectoryController {
             throw new UnauthorizedAccessException("You are not allowed to create directories in this directory.");
         }
 
-        DirectoryEntity directoryEntity = new DirectoryEntity()
-                .setDateCreated(new Date())
-                .setName(requestBody.getName())
-                .setAccessLevel(accessLevel)
-                .setParentDirectory(parentDirectory);
-        directoryEntity = directoryService.save(directoryEntity);
+        DirectoryEntity directoryEntity = directoryService.save(
+                DirectoryEntity.builder()
+                        .dateCreated(new Date())
+                        .name(requestBody.getName())
+                        .accessLevel(accessLevel)
+                        .parentDirectory(parentDirectory)
+                        .build());
 
         return ResponseEntity.ok(new CreateDirectoryResponse(converter.convertToDto(directoryEntity)));
     }
@@ -209,7 +207,7 @@ public class DirectoryController {
             throw new UnauthorizedAccessException("You are not allowed to search in this directory");
         }
 
-        PageRequest pageRequest = new PageRequest(request.getPage(), request.getPageSize());
+        PageRequest pageRequest = PageRequest.of(request.getPage(), request.getPageSize());
         Page<DirectoryEntity> directoryEntityPage =
                 directoryService.findByNameContainingOrParentDirectory(request.getName(), parentDirectory, pageRequest);
 

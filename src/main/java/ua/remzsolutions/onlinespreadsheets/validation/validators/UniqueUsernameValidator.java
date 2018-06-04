@@ -1,7 +1,7 @@
-package ua.remzsolutions.onlinespreadsheets.web.validation.validators;
+package ua.remzsolutions.onlinespreadsheets.validation.validators;
 
 import ua.remzsolutions.onlinespreadsheets.domain.services.UserService;
-import ua.remzsolutions.onlinespreadsheets.web.validation.constraints.UniqueUsername;
+import ua.remzsolutions.onlinespreadsheets.validation.constraints.UniqueUsername;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

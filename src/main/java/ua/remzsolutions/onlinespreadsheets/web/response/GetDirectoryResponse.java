@@ -1,21 +1,16 @@
 package ua.remzsolutions.onlinespreadsheets.web.response;
 
+import lombok.*;
 import ua.remzsolutions.onlinespreadsheets.domain.dto.DirectoryDTO;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class GetDirectoryResponse extends AbstractResponse {
 
     private DirectoryDTO directory;
 
-    public GetDirectoryResponse(DirectoryDTO directory) {
-        this.directory = directory;
-    }
-
-    public DirectoryDTO getDirectory() {
-        return directory;
-    }
-
-    public GetDirectoryResponse setDirectory(DirectoryDTO directory) {
-        this.directory = directory;
-        return this;
-    }
 }

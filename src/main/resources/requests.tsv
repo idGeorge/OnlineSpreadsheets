@@ -1,0 +1,183 @@
+Login [POST]
+    /login/
+    {
+        username;
+        password
+    }
+    Token or Error message
+    
+       
+Document [GET]
+    GET
+    /documents/{id}
+    {}
+    Entity or Error message
+
+    
+Document [SEARCH]
+    GET
+    /documents/?
+                title
+                author // username
+                archived
+                created-on=YYYY-MM-DD
+                page
+                size
+    {}
+    Page of Entities or Error message
+    
+    
+Document [UPDATE]
+    PATCH
+    /documents/{id}/
+    {
+        title
+        accessLevelId
+    }
+    Operation status code
+    
+    
+Document [CREATE]
+    POST
+    /documents/
+    {
+        title
+        accessRoleId
+        archived
+    }
+    Entity id or Error message
+    
+    
+User [GET]
+    GET
+    /users/{user-id}
+    {}
+    Entity or Error message
+    
+    
+User [SEARCH]
+    GET
+    /users/?
+            username
+            first-name
+            last-name
+            fired
+            access-roles-id
+            page
+            size
+    {}
+    Page of Entities or Error message
+    
+    
+User [UPDATE]
+    PATCH
+    /users/{id}
+    {
+        updated data values
+    }
+    Operation status code
+    
+    
+User [CREATE]
+    POST
+    /users/
+    {
+        username
+        password
+        first-name
+        last-name
+        fired
+    }
+    Entity id or Error message
+    
+    
+Directory [TREE]
+    GET
+    /
+    {}
+    Entity tree or Error message
+    
+    
+Directory [SEARCH]
+    GET
+    /directory/?
+                parent-directory-id
+                name
+                date=YYYY-MM-DD
+                page
+                size
+    {}
+    Page of Entities or Error message
+    
+    
+Directory [CREATE]
+    POST
+    /directory/
+    {
+        parent-directory-id
+        name
+        access-roles-id
+    }
+    Entity id or Error message
+    
+    
+Directory [UPDATE]
+    PATCH
+    /directory/{id}
+    {
+        updated data values
+    }
+    Operation status code
+    
+    
+Directory [DELETE]
+    DELETE
+    /directory/{id}
+    {}
+    Operation status code
+    
+    
+Directory [GET]
+    GET
+    /directory/{id}
+    {}
+    Entity or Error message
+
+
+Spreadsheet [GET]
+    GET
+    /documents/{doc_id}/spreadsheets/{s_id}
+    {}
+    Entity or Error message
+
+
+Spreadsheet [SEARCH]
+    GET
+    /documents/{doc_id}/spreadsheets/{s_id}/?
+                title
+    Entity or Error message
+
+
+Spreadsheet [UPDATE]
+    PATCH
+        /documents/{doc_id}/spreadsheets/{s_id}/
+        {
+            operation {
+                editCell  ||
+                addRow    ||
+                removeRow ||
+                removeCol ||
+                archive
+            }
+            rowIndex
+            colIndex
+            newValue
+        }
+
+
+Spreadsheet [CREATE]
+    POST
+    /documents/{doc_id}/spreadsheets/
+    {
+        name
+    }

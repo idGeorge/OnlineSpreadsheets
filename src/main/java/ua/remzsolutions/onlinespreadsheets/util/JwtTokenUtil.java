@@ -33,8 +33,9 @@ public class JwtTokenUtil {
         return doGenerateToken(claims, username);
     }
 
+    // TODO: test
     public boolean hasClaim(String claimName, String token) {
-
+        return getAllClaimsFromToken(token).containsKey(claimName);
     }
 
     public boolean isValid(String token) {

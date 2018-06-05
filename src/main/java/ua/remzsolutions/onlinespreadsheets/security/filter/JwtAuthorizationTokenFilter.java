@@ -52,7 +52,7 @@ public class JwtAuthorizationTokenFilter extends BasicAuthenticationFilter {
                 return;
             }
         } else {
-            LOGGER.info("No token submitted from {}.", request.getRemoteAddr());
+            LOGGER.info("No token from {}.", request.getRemoteAddr());
         }
 
         filterChain.doFilter(request, response);

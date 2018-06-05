@@ -30,7 +30,8 @@ public class AuthenticationController {
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public AuthenticationController(UserService userService, SecurityService securityService, JwtTokenUtil tokenUtil, BCryptPasswordEncoder encoder) {
+    public AuthenticationController(UserService userService, SecurityService securityService,
+                                    JwtTokenUtil tokenUtil, BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.securityService = securityService;
         this.tokenUtil = tokenUtil;
